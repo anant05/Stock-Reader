@@ -15,8 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path, re_path
-from apps.stock.views import StockView
+from apps.stock.views import StockListView
 
 urlpatterns = [
-    re_path(r'^$', view=StockView.as_view(), name='List'),
+    re_path(r'^$', view=StockListView.as_view(), name='List'),
 ]
