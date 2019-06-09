@@ -5,18 +5,18 @@
 	<div class="col-sm-6 col-sm-offset-3">
 		<h1> STOCK WATCHLIST</h1>
 
-		{% for object in object_list %}
+		{% for stock in stock_objects %}
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="card" style="width: 50rem;">
 		  
 			  		<div class="card-body">
-			    		<!-- <h5 class="card-title"><a href='{{ object.get_absolute_url }}'>{{object.name.title }}</a> <small>{{ object.create_date | timesince }} ago</small></h5> -->
+			    		<!-- <h5 class="card-title"><a href='{{ stock.get_absolute_url }}'>{{stock.name.title }}</a> <small>{{ stock.create_date | timesince }} ago</small></h5> -->
 					    <p class="card-text">
-					    Ticker: {{ object.ticker }}</br>
-					    Company: {{ object.name }}</br>
+					    Ticker: {{ stock.ticker }}</br>
+					    Company: {{ stock.name }}</br>
 						</p>
-					    <a href='{{ object.get_absolute_url }}' class="btn btn-primary">View</a>
+					    <a href="{% url 'detail' stock.id%}" class="btn btn-primary">View</a>
 			  		</div>
 				</div>
 			</div>

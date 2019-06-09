@@ -1,0 +1,28 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="col-sm-6 col-sm-offset-3">
+		<h1> {{ stock.name.title}} Detail</h1>
+
+		
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card" style="width: 50rem;">
+	  
+		  		<div class="card-body">
+		    		<!-- <h5 class="card-title"><a href='{{ object.get_absolute_url }}'>{{object.name.title }}</a> <small>{{ object.create_date | timesince }} ago</small></h5> -->
+				    <p class="card-text">
+				    Ticker: {{ stock.ticker }}</br>
+				    Company: {{ stock.name }}</br>
+					</p>
+				    <a href="{% url 'List' %}" class="btn btn-primary">Watchlist</a>
+		  		</div>
+			</div>
+		</div>
+		<hr/>
+	</div>
+
+
+
+{% endblock content %}
