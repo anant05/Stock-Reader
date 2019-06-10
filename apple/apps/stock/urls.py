@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path, re_path
-from apps.stock.views import StockListView, StockDetailView
+from apps.stock.views import StockListView, StockDetailView, StockNotesView
 
+app_name='stock'
 urlpatterns = [
     re_path(r'^$', view=StockListView.as_view(), name='List'),
+    path('notes/', view=StockNotesView.as_view(), name='notes'),
     path('<int:pk>/', StockDetailView.as_view(), name='detail'),
+    # path('<int:pk>/notes/', StockNotesView.as_view(), name='notes')
 ]
