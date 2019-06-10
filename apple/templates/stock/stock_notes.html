@@ -1,0 +1,43 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="container">		
+		<h1> STOCK NOTES </h1>
+
+		<table class="table table-bordered table-striped">
+  			<thead class="thead-dark">
+			    <tr>
+
+			      <th scope="col">Ticker</th>
+			      <th scope="col">Range</th>
+			      <th scope="col">Resistance</th>
+			      <th scope="col">Support</th>
+			      <th scope="col">Stance</th>
+			      <th scope="col">Priority</th>
+			      <th scope="col">Comments</th>
+			    </tr>
+  			</thead>
+			
+			<tbody>
+				{% for analysis in notes_object %}
+				<tr>
+			      <th scope="row">{{ analysis.ticker.ticker }}</td>
+			      <td>{{ analysis.stock_range }}</td>
+			      <td>{{ analysis.resistance }}</td>
+			      <td>{{ analysis.support }}</td>
+			      <td>{{ analysis.stance }}</td>
+			     
+			      <td>{{ analysis.priority }}</td>
+			       <td>{{ analysis.comments }}</td>
+			    </tr>
+			    {% endfor %}
+			</tbody>
+		</table>
+	</div>
+</br>
+<!-- {% cycle "" "<div class='col-sm-12'><hr/></div></div><div class='row'>" %} -->
+
+
+{% endblock content %}
+

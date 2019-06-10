@@ -2,12 +2,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<div class="col-sm-6 col-sm-offset-3">
+	<div class="col-lg-12">
 		<h1> {{ stock.name.title}} Detail</h1>
 
 		
 	<div class="row">
-		<div class="col-sm-12">
+		<div class="col-sm-3">
 			<div class="card" style="width: 50rem;">
 	  
 		  		<div class="card-body">
@@ -15,14 +15,53 @@
 				    <p class="card-text">
 				    Ticker: {{ stock.ticker }}</br>
 				    Company: {{ stock.name }}</br>
+
+				    Open: {{ stock_info.open | floatformat:2}}</br>
+				    Close: {{ stock_info.close | floatformat:2}}</br>
+				    High: {{ stock_info.high | floatformat:2}}</br>
+				    Low: {{ stock_info.low | floatformat:2}}</br>
+				    Vol: {{ stock_info.volume}}</br>
 					</p>
-				    <a href="{% url 'List' %}" class="btn btn-primary">Watchlist</a>
+				    <a href="{{ stock.get_list_url }}" class="btn btn-primary">Watchlist</a>
 		  		</div>
 			</div>
 		</div>
 		<hr/>
 	</div>
 
+	
+
+	<div class="container">		
+		<h1> STOCK NOTES</h1>
+
+		<table class="table table-bordered table-striped">
+  			<thead class="thead-dark">
+			    <tr>
+			      <th scope="col">Ticker</th>
+			      <th scope="col">Range</th>
+			      <th scope="col">Resistance</th>
+			      <th scope="col">Support</th>
+			      <th scope="col">Stance</th>
+			      <th scope="col">Priority</th>
+			    </tr>
+  			</thead>
+			
+			<tbody>
+				{% for analysis in notes %}
+				<tr>
+			      <th scope="row">{{ analysis.ticker.ticker }}</td>
+			      <td>{{ analysis.stock_range }}</td>
+			      <td>{{ analysis.resistance }}</td>
+			      <td>{{ analysis.support }}</td>
+			      <td>{{ analysis.stance }}</td>
+			      <td>{{ analysis.priority }}</td>
+			    </tr>
+			    {% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+</div>
 
 
 {% endblock content %}

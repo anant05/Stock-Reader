@@ -18,7 +18,7 @@
           Stocks
           </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="{% url 'List' %}">Watchlist</a>
+              <a class="dropdown-item" href="{% url 'stock:List' %}">Watchlist</a>
               <a class="dropdown-item" href="#">Hisotry</a>
               <a class="dropdown-item" href="#">Trades</a>
             </div>
@@ -26,7 +26,7 @@
 
 
         <li class="nav-item">
-          <a class="nav-link" href="#">Notes</a>
+          <a class="nav-link" href="{% url 'stock:notes' %}">Notes</a>
         </li>
         <li class="nav-item">
           <a class="nav-link disabled" href="#">Nutrition</a>
