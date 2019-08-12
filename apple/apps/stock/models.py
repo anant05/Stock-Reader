@@ -3,6 +3,9 @@ from apps.stock.behaviors import Nameable, Stockable, Timestampable
 
 from django.urls import reverse
 
+import math
+
+
 class Stock(Nameable, Timestampable):
 	ticker = models.CharField(max_length=5)
 
@@ -14,6 +17,10 @@ class Stock(Nameable, Timestampable):
 
 	def get_list_url(self):
 		return reverse("stock:List")
+
+	@property
+	def print_name(self):
+		return self.name
 
 class Analysis(Stockable, Timestampable):
 	BEAR = 'Bearish'
@@ -45,6 +52,11 @@ class Analysis(Stockable, Timestampable):
 	def get_absolute_url(self):
 		return reverse("stock:notes")
 
+	def rating(self):
+		return math.ceil(self.close)
+
+
+
 class Market(Stockable, Timestampable):
 	open = models.DecimalField(max_digits=7, decimal_places=2)
 	close = models.DecimalField(max_digits=7, decimal_places=2)
@@ -54,3 +66,14 @@ class Market(Stockable, Timestampable):
 
 	def __str__(self):
 		return "Market [{}] {}".format(self.ticker, self.created_date)
+
+	@property
+	def volatility(self):
+		_volatility = self.high - self.low
+		if _volatility > 0:
+			return _volatility
+		else:
+			raise ValueError('Volatilty cannot be in negative.')
+
+	def change(self):
+		return self.open - self.close
