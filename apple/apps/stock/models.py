@@ -1,13 +1,16 @@
 from django.db import models
+from django.db.models.signals import pre_save
+
 from apps.stock.behaviors import Nameable, Stockable, Timestampable
-
 from django.urls import reverse
-
 import math
+
+from django.utils.text import slugify
 
 
 class Stock(Nameable, Timestampable):
 	ticker = models.CharField(max_length=5)
+	slug = models.SlugField(unique=True)
 
 	def __str__(self):
 		return "Share: {}[{}]".format(self.name, self.ticker)
@@ -56,7 +59,6 @@ class Analysis(Stockable, Timestampable):
 		return math.ceil(self.close)
 
 
-
 class Market(Stockable, Timestampable):
 	open = models.DecimalField(max_digits=7, decimal_places=2)
 	close = models.DecimalField(max_digits=7, decimal_places=2)
@@ -77,3 +79,21 @@ class Market(Stockable, Timestampable):
 
 	def change(self):
 		return self.open - self.close
+
+
+def create_slug(instance, new_slug=None):
+	slug = slugify(instance.name)
+	if new_slug in not None:
+		slug = new_slug
+	exists = Stock.objects.filter(slug=slug).order_by("-id").exist()
+	if exists:
+		new_slug = "{}-{}".format(slug, instance.id)
+		return create_slug(instance, new_slug=new_slug)
+	return slug
+
+def pre_save_post_receiver(sender, instance, args, **kwargs):
+	if not instance.slug:
+		instance.slug = create_slug(instance)
+
+
+pre_save.connect(pre_save_post_receiver, sender=Stock)
